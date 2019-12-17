@@ -1,6 +1,8 @@
 # CIIE2019
 
-Material presentado al CIIE 2019, Monterrey
+Material presentado al CIIE 2019, Monterrey, 17 de diciembre, 2019.
+
+Si acceden a este repositorio mediante el código QR, pulsen el botón `Jump to file` que se encuentra a la derecha, arriba de este README.md. 
 
 En este repositorio se comparten cierto número de archivos. 
 
