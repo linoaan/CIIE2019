@@ -1,0 +1,163 @@
+---
+title: "R Markdown, investigación reproducible y aplicaciones educativas"
+author: "Lino AA Notarantonio (lino@tec.mx)"
+date: "12/17/2019"
+output: 
+  beamer_presentation:
+    slide_level: 2
+    theme: "PaloAlto"
+    colortheme: "dolphin"
+    keep_tex: yes
+    toc: no
+    fonttheme: "structurebold"
+  header-includes:
+    \usepackage{xcolor}
+---
+
+
+## Presentación
+
+La pueden bajar en el repositorio de Github. Sigan \alert{Jump to file} en la página del repositorio.
+
+![Código QR de la presentación](QRCode.jpeg)
+
+
+## R Markdown
+
+[\textcolor{blue}{R Markdown}](\textcolor{blue}{https://rmarkdown.rstudio.com/lesson-1.html}) proporciona un marco para académicos que trabajan en ciencias de datos. 
+
+R Markdown permite 
+
+- guardar y ejecutar código; 
+
+- generar reportes de alta calidad que se puedan compartir. 
+
+Más detalles dando click en la siguiente  [\textcolor{blue}{liga}](https://rmarkdown.rstudio.com/lesson-9.html).
+
+## Investigación reproducible: Antecedentes
+
+Los métodos estadísticos juegan un papel fundamental en las ciencias empíricas con baja relación señal-ruido.
+
+En los últimos años se han presentados problemas de reproducibilidad de muchos resultados en ciencias sociales y ciencias de la salud. Entre otros, mencionamos
+
+- [\textcolor{blue}{Reproducibility Project in Psychology}](https://science.sciencemag.org/content/349/6251/aac4716) (Science, 2015). Una de las conclusiones es una evidencia débil para los resultados en los artículos originales, aún con datos proporcionados por los mismos autores. 
+
+## Investigación reproducible: Antecedentes
+
+- [\textcolor{blue}{Social Sciences Replication Project}](https://www.nature.com/collections/nfkchhxllx) (2018) De los 21 experimentos considerados (todos publicados en *Nature* o *Science*, en el periodo 2010-2015), sólo 13 pudieron ser replicados. Además, el tamaño del efecto en el estudio es aproximadamente la mitad de los que se publicó.
+
+
+## Investigación reproducible: Ejemplo ilustrativo
+
+Datos perdidos ([\textcolor{blue}{L. Weitzman}](http://0-search.ebscohost.com.biblioteca-ils.tec.mx/login.aspx?direct=true&db=a9h&AN=9606254980&site=ehost-live&custid=s4441650), 1996)
+
+- Los datos modificados que sirvieron para el análisis de un artículo anterior (Weitzman, 1985) se perdieron. sólo quedaban los datos originales (*raw data*). 
+
+- Un investigador (Peterson, 1996) pudo reproducir parcialmente los hallazgos del 1985. 
+
+## Investigación reproducible
+
+Investigación que permite la presentación de los resultados con la manipulación **transparente** y **reproducible** de los datos correspondientes. 
+
+Beneficios
+
+- Investigación: facilidad de réplica de resultados empíricos. 
+
+- Aplicaciones educativas (análisis de datos): manipulación de los datos asociados visualizando el código y los resultados.
+
+
+
+## Ejemplo 1
+
+- Los datos a continuación se bajaron del sitio NOAA (National Oceanic and Atmospheric Administration) de EEUU. 
+
+- Los datos abarcan observaciones de CO2 en el periodo marzo 1958 a marzo 2017.
+
+- La columna (variable) *average* contiene las medias mensuales de CO2 (ppm, partes per millones).
+
+- Datos ausentes para la variale *average* se denotan con $-99.99$; para la variable *no. days* con $-1$. 
+
+
+## Ejemplo 1
+
+Visualización de las primeras cuatro observaciones del dataset:
+```{r, eval = FALSE}
+co2_mm_mlo <- 
+  read.table("co2_mm_mlo.txt", quote="\"")
+head(co2_mm_mlo, 4)
+```
+
+
+## Ejemplo 1
+
+```{r, echo = FALSE}
+co2_mm_mlo <- read.table("co2_mm_mlo.txt", quote="\"")
+head(co2_mm_mlo, 4)
+```
+
+## Ejemplo 1
+
+Se usará la variable *average* ($V4$). 
+
+Cambiamos el valor numérico $-99.99$ (que indica observaciones ausentes) a $NA$:
+```{r}
+co2_mm_mlo$V4[co2_mm_mlo$V4 == -99.99] <- NA
+head(co2_mm_mlo, 4)
+```
+
+## Ejemplo 1
+
+Cálculo de estadísticos descriptivos:
+
+```{r}
+x <- co2_mm_mlo$V4
+summary(x, na.rm = TRUE)
+```
+
+
+## Ejemplo 1
+
+Ploteo de la variable *average* como series de tiempo, incluyendo la tendencia:
+```{r, eval = FALSE}
+plot.ts(x)
+y <- co2_mm_mlo$V6
+lines(y, col = "red")
+```
+
+
+## Ejemplo 1
+
+```{r, echo = FALSE}
+plot.ts(x)
+y <- co2_mm_mlo$V6
+lines(y, col = "red")
+```
+
+## Ejemplo 2
+
+Simulación de 100 muestras tomadas de una población normal estándar con  histograma y las denstidades de probabilidad teórica y empírica correspondiente.
+
+```{r, echo = TRUE, eval = FALSE}
+set.seed(123)
+y <- rnorm(100)
+hist(y, probability = TRUE)
+curve(dnorm(x), col = "red", add = TRUE)
+d <- density(y)
+lines(d, col = "blue", add = TRUE)
+```
+
+
+## Ejemplo 2
+
+```{r, eval = TRUE, echo = FALSE}
+set.seed(123)
+y <- rnorm(100)
+hist(y, probability = TRUE)
+curve(dnorm(x), col = "red", add = TRUE)
+d <- density(y)
+lines(d, col = "blue", add = TRUE)
+```
+
+El uso de `set.seed(123)` permite la replicación de los datos simulados.
+
+
