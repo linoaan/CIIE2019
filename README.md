@@ -11,3 +11,5 @@ Los otros archivos son archivos Rmd (R Markdown); el primero `presentation.Rmd` 
 El segundo archivo Rmd, `presentationPPT.Rmd`, permite generar el archivo en Powerpoint. 
 
 Para poder usar (y, quizás, modificar) los archivos Rmd se neecesita instalar primeramente R y después RStudio. Podría ser necesario instalar la última versión de la librería `rmarkdown`. 
+
+Se incluye también la base de datos `co2_mm_mlo.txt` que se usa en la ponencia. 
